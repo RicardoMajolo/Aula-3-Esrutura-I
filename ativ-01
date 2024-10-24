@@ -1,0 +1,33 @@
+/*1- Escreva um programa que receba do usuário o tamanho de um vetor de inteiros a ser lido e
+efetue a alocação dinâmica de memória. A seguir, leia as entradas do usuário para preencher o
+vetor e exiba o vetor resultante.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int vet;
+    printf("Digite o tamanho do vetor: ");
+    scanf("%d", &vet);
+    
+    int *p = malloc(vet * sizeof(int));
+    if (p == NULL) {
+        printf("Erro na alocação de memória.\n");
+        return 1; 
+    }
+
+    for (int i = 0; i < vet; i++) {
+        printf("Digite o número do vetor na posição %i: ", i + 1);
+        scanf("%d", &p[i]);
+    }
+
+    printf("Vetor resultante: ");
+    for (int i = 0; i < vet; i++) {
+        printf("%d ", p[i]);
+    }
+    printf("\n");
+
+    free(p);
+
+    return 0;
+}
