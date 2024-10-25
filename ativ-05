@@ -1,0 +1,64 @@
+/*5- Escreva um programa que aloque dinamicamente uma matriz de inteiros de dimensões
+definidas pelo usuário e a preencha de forma automática com valores aleatórios entre 0 e 100.
+Em seguida, implemente uma função que receba um valor digitado pelo usuário e retorne 1 (um)
+caso o valor informado esteja na matriz ou retorne 0 (zero) caso o valor não seja localizado.*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int buscarValor(int **matriz, int linhas, int colunas, int valor) {
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            if (matriz[i][j] == valor) {
+                return 1; 
+            }
+        }
+    }
+    return 0; 
+}
+
+int main() {
+    int linhas, colunas;
+    srand(time(NULL));
+
+    printf("Digite o numero de linhas: ");
+    scanf("%d", &linhas);
+    printf("Digite o numero de colunas: ");
+    scanf("%d", &colunas);
+
+    int **matriz = malloc(linhas * sizeof(int *));
+    for (int i = 0; i < linhas; i++) {
+        matriz[i] = malloc(colunas * sizeof(int));
+    }
+
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            matriz[i][j] = rand() % 101; 
+        }
+    }
+
+    printf("Matriz gerada:\n");
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+
+    int valorBuscado;
+    printf("Digite um valor para buscar na matriz: ");
+    scanf("%d", &valorBuscado);
+
+    if (buscarValor(matriz, linhas, colunas, valorBuscado)) {
+        printf("O valor %d esta na matriz.\n", valorBuscado);
+    } else {
+        printf("O valor %d nao esta na matriz.\n", valorBuscado);
+    }
+
+    for (int i = 0; i < linhas; i++) {
+        free(matriz[i]);
+    }
+    free(matriz);
+
+    return 0;
+}
